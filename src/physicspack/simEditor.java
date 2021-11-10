@@ -27,7 +27,11 @@ public class simEditor implements ActionListener{
 	
 	JButton addBlock = new JButton("Add Block");
 	
+	JButton collisionDetection = new JButton("Collisions On");
+	
 	public ArrayList<block> totalBlocks = new ArrayList<block>();
+	
+	public boolean collisionsOn = true; 
 	
 	simEditor() {
 		f.setLayout(new GridBagLayout());
@@ -36,6 +40,7 @@ public class simEditor implements ActionListener{
 		f.setVisible(false);
 		
 		addBlock.addActionListener(this);
+		collisionDetection.addActionListener(this);
 		
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.weightx  = .5; 
@@ -60,6 +65,14 @@ public class simEditor implements ActionListener{
 		c.weightx = 0; 
 		c.insets = new Insets(0,100,0,100);
 		f.add(addBlock,c); 
+		c.gridy = 4; 
+		c.gridx = 0;
+		c.gridwidth = 2;
+		c.weightx = 0; 
+		c.insets = new Insets(0,100,0,100);
+		collisionDetection.setOpaque(true);
+		collisionDetection.setBackground(Color.green);
+		f.add(collisionDetection, c); 
 		
 		Timer t = new Timer(1000/60, this);
 		t.start();
@@ -86,6 +99,18 @@ public class simEditor implements ActionListener{
 		
 		if (e.getActionCommand() == "Add Block") {
 			totalBlocks.add(new block(150, 100, 50, 50));
+		}
+		
+		if (e.getActionCommand() == "Collisions On") {
+			collisionDetection.setBackground(Color.RED);
+			collisionDetection.setText("Collisions Off");
+			collisionsOn = false; 
+		}
+		
+		if (e.getActionCommand() == "Collisions Off") {
+			collisionDetection.setBackground(Color.GREEN);
+			collisionDetection.setText("Collisions On");
+			collisionsOn = true; 
 		}
 	}
 }

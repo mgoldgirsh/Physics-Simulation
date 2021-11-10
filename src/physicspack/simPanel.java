@@ -51,6 +51,7 @@ public class simPanel extends JPanel implements ActionListener, MouseListener, M
 			se.setVisible(true);
 		}
 		
+		// gravity movement
 		for (int i = 0; i<se.totalBlocks.size(); i++) {
 			if (se.totalBlocks.get(i).getY() < getHeight()-height && dragged != true) { 
 				se.totalBlocks.get(i).changeY(se.totalBlocks.get(i).getY() + se.totalBlocks.get(i).getVelocity());  
@@ -66,17 +67,11 @@ public class simPanel extends JPanel implements ActionListener, MouseListener, M
 				se.totalBlocks.get(i).changeY(se.totalBlocks.get(i).getY() + se.totalBlocks.get(i).getVelocity());
 			}
 			
-			if (se.totalBlocks.size() > 1 && dragged != true) {
+			// Collision detection
+			if (se.totalBlocks.size() > 1 && dragged != true && se.collisionsOn) {
 				for (int j= i+1; j<se.totalBlocks.size(); j++) {
-					if (se.totalBlocks.get(i).getX() > se.totalBlocks.get(j).getX() && se.totalBlocks.get(i).getX() < se.totalBlocks.get(j).getX() + se.totalBlocks.get(j).getWidth()) {
-//						if (se.totalBlocks.get(i).getY() + se.totalBlocks.get(i).getHeight() >= se.totalBlocks.get(j).getY()) {
-//							se.totalBlocks.get(i).changeY(se.totalBlocks.get(j).getY() - se.totalBlocks.get(i).getHeight());
-//							se.totalBlocks.get(i).changeVelocity(0);
-//						}
-						if (se.totalBlocks.get(i).r.intersects(se.totalBlocks.get(j).r)) {
-							se.totalBlocks.get(i).changeY(se.totalBlocks.get(j).getY() - se.totalBlocks.get(i).getHeight());
-							se.totalBlocks.get(i).changeVelocity(0);
-						}
+					if (se.totalBlocks.get(i).collides(se.totalBlocks.get(j))) {
+						se.totalBlocks.get(i).changeIfCollision(se.totalBlocks.get(j));
 					}
 				}
 			}

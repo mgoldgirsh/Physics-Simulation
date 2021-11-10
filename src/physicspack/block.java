@@ -12,17 +12,12 @@ public class block extends JComponent {
 	
 	public Rectangle r = new Rectangle(x,y,width,height); 
 	
-	public Rectangle head = new Rectangle(x,y,width, height /5);
-	
-	public int[] x1 = new int[4]; public int[] y1 = new int[4];
-	public Polygon p = new Polygon(x1, y1, 4);
-	
 	public block(int x, int y, int width, int height) {
 		this.x = x;
 		this.y = y; 
 		this.width = width;
 		this.height = height; 
-		this.velocity = velocity; 
+		this.velocity = velocity;
 		r.setBounds(x, y, width, height);
 		
 	}
@@ -92,6 +87,22 @@ public class block extends JComponent {
 	
 	public void changeVelocity(int velocity) {
 		this.velocity = velocity; 
+	}
+	
+	public boolean collides(block b) {
+		if (this.x >= b.x && this.x <= b.x + b.width) { 
+			if (this.y + this.height >= b.y && this.y + this.height <= b.y + b.height) {
+				return true; 
+			}
+		}
+		return false; 
+	}
+	
+	public void changeIfCollision(block b) {
+		if (this.collides(b)) {
+			this.y = b.y - b.height;
+			this.velocity = 0; 
+		}
 	}
 	
 	public void createBlock(Graphics g) {
