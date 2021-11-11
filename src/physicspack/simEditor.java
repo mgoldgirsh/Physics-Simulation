@@ -27,10 +27,15 @@ public class simEditor implements ActionListener{
 	
 	JButton addBlock = new JButton("Add Block");
 	
+	JButton removeBlock = new JButton("Remove Block");
+	
 	JButton collisionDetection = new JButton("Collisions On");
+	
+	JButton graph = new JButton("Graph"); 
 	
 	public ArrayList<block> totalBlocks = new ArrayList<block>();
 	
+	public graphPanel g = new graphPanel(); 
 	public boolean collisionsOn = true; 
 	
 	simEditor() {
@@ -40,7 +45,9 @@ public class simEditor implements ActionListener{
 		f.setVisible(false);
 		
 		addBlock.addActionListener(this);
+		removeBlock.addActionListener(this);
 		collisionDetection.addActionListener(this);
+		graph.addActionListener(this);
 		
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.weightx  = .5; 
@@ -65,7 +72,13 @@ public class simEditor implements ActionListener{
 		c.weightx = 0; 
 		c.insets = new Insets(0,100,0,100);
 		f.add(addBlock,c); 
-		c.gridy = 4; 
+		c.gridy = 4;
+		c.gridx = 0;
+		c.gridwidth = 2; 
+		c.weightx = 0; 
+		c.insets = new Insets(0,100,0,100);
+		f.add(removeBlock, c); 
+		c.gridy = 5; 
 		c.gridx = 0;
 		c.gridwidth = 2;
 		c.weightx = 0; 
@@ -73,6 +86,12 @@ public class simEditor implements ActionListener{
 		collisionDetection.setOpaque(true);
 		collisionDetection.setBackground(Color.green);
 		f.add(collisionDetection, c); 
+		c.gridy = 6; 
+		c.gridx = 0; 
+		c.gridwidth = 2;
+		c.weightx = 0; 
+		c.insets = new Insets(0,100,0,100);
+		f.add(graph, c); 
 		
 		Timer t = new Timer(1000/60, this);
 		t.start();
@@ -93,12 +112,28 @@ public class simEditor implements ActionListener{
 		return massSlider.getValue(); 
 	}
 	
+	public void addXPos(int num) {
+		g.xPos.add(num);
+	}
+	
+	public void addYPos(int num) {
+		g.yPos.add(num);
+	}
+	
+	public boolean graphGetRecording() {
+		return g.getRecording(); 
+	}
+	
 	public void actionPerformed(ActionEvent e) {
 		massLabel.setText("Block Mass (kg): " + massSlider.getValue());
 		elasticSliderLabel.setText("Percent Inelastic: " + (elasticSlider.getValue() - 10));
 		
 		if (e.getActionCommand() == "Add Block") {
 			totalBlocks.add(new block(150, 100, 50, 50));
+		}
+		
+		if (e.getActionCommand() == "Remove Block") {
+			totalBlocks.remove(totalBlocks.size() -1); 
 		}
 		
 		if (e.getActionCommand() == "Collisions On") {
@@ -111,6 +146,10 @@ public class simEditor implements ActionListener{
 			collisionDetection.setBackground(Color.GREEN);
 			collisionDetection.setText("Collisions On");
 			collisionsOn = true; 
+		}
+		
+		if (e.getActionCommand() == "Graph") {
+			g.setVisible(true);
 		}
 	}
 }

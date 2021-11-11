@@ -109,8 +109,6 @@ public class block extends JComponent {
 		g.setColor(Color.DARK_GRAY);
 		g.fillRect(x, y, width, height);
 		r.setBounds(x, y, width, height);;
-//		g.fillPolygon(p);
-//		r.setBounds(p.getBounds());
 	}
 	
 }

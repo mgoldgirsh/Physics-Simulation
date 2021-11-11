@@ -76,12 +76,15 @@ public class simPanel extends JPanel implements ActionListener, MouseListener, M
 				}
 			}
 		}
+		if (se.graphGetRecording()) {
+			se.addXPos(se.totalBlocks.get(0).x);
+			se.addYPos(se.totalBlocks.get(0).y);
+		}
 		repaint(); 
 	}
 	
 	public void paint(Graphics g) {
 		super.paint(g);
-		//b1.createBlock(g);
 		for (int i =0; i<se.totalBlocks.size(); i++) {
 			se.totalBlocks.get(i).createBlock(g);
 		}
